@@ -17,4 +17,4 @@ jobs:
       env:
         DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
       with:
-        args: version
+        args: compute firewall list
