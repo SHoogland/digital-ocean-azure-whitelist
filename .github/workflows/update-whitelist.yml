@@ -12,4 +12,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - run: echo fissa
+    - name: Update whitelist
+      uses: digitalocean/action-doctl@v1
+      env:
+        DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+      with:
+        args: version
