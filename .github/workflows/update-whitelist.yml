@@ -15,9 +15,15 @@ jobs:
     - name: get IP
       run: echo "##[set-output name=IP;]$(dig +short myip.opendns.com @resolver1.opendns.com)"
       id: ip
-    - name: Update whitelist
+    - name: Allow this action to access the server
       uses: digitalocean/action-doctl@v1
       env:
         DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
       with:
-        args: compute firewall update 02f5cd35-294e-4afa-a474-98afd4afb245 --name azure-cloud --inbound-rules "protocol:tcp,ports:22,address:${{ steps.ip.outputs.IP }}"
+        args: compute firewall add-rules 02f5cd35-294e-4afa-a474-98afd4afb245 --inbound-rules "protocol:tcp,ports:22,address:${{ steps.ip.outputs.IP }}"
+    - name: Remove the rule after use
+      uses: digitalocean/action-doctl@v1
+      env:
+        DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+      with:
+        args: compute firewall remove-rules 02f5cd35-294e-4afa-a474-98afd4afb245 --inbound-rules "protocol:tcp,ports:22,address:${{ steps.ip.outputs.IP }}"
