@@ -18,3 +18,4 @@ jobs:
         DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
       with:
         args: compute firewall list
+    - run: curl http://ip-api.com/json/
