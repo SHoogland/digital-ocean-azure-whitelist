@@ -1,0 +1,15 @@
+name: Update digital ocean firewall whitelist
+
+on:
+  push:
+    branches: master
+  schedule:
+  - cron: "0 0 * * *"
+
+jobs:
+  update:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - run: echo fissa
